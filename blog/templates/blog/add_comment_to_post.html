@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+{% load wysiwyg staticfiles %}
+{% block extracss %}
+    {{ block.super }}
+    {% wysiwyg_setup %}
+{% endblock extracss %}
+
+{% block contentbody %}
+    <h1>New comment</h1>
+    <form method="POST" class="comment-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="form-group row">
+            <label for="id_text" class="col-sm-2 col-form-label">Comment Text</label>
+            <div class="col-sm-10">
+                <textarea id="id_text"></textarea>
+                {% wysiwyg_editor "id_text" editor_name="tinymce" %}
+            </div>
+        </div>
+        <button class="save btn btn-default" type="submit">Send</button>
+    </form>
+{% endblock contentbody %}
+

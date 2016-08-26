@@ -39,13 +39,19 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'tinymce',
+    'django_wysiwyg',
 )
+
+
+
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
     # custom users app
     'my_django_blog.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+    'blog',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -160,6 +166,7 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 # Your stuff: custom template context processors go here
+                'my_django_blog.dev_context_processor.dev_context_processor'
             ],
         },
     },
@@ -175,10 +182,13 @@ STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
+DJANGO_WYSIWYG_MEDIA_URL = str(STATIC_URL + 'tinymce/')
+DJANGO_WYSIWYG_FLAVOR = "tinymce4"
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
     str(APPS_DIR.path('static')),
+    str(ROOT_DIR.path('node_modules')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders

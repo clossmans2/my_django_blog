@@ -1,0 +1,14 @@
+{% extends "blog/base.html" %}
+{% block contentbody %}
+    {% for post in posts %}
+        <div class="blog-post">
+            <h2 class="blog-post-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+            <p class="blog-post-meta">Created: {{ post.created_date }}</p>
+            <p class="blog-post-meta">Published: {{ post.published_date }}</p>
+            <p class="blog-post-body">
+                {{ post.text|linebreaksbr }}
+            </p>
+            <a href="{% url 'blog.views.post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+        </div>
+    {% endfor %}
+{% endblock contentbody %}

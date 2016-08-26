@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
+    url(r'^blog/', include('blog.urls'), name='blog'),
+    url(r'^tinymce/', include('tinymce.urls')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
