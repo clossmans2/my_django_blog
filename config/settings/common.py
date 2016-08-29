@@ -183,7 +183,7 @@ STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 DJANGO_WYSIWYG_MEDIA_URL = str(STATIC_URL + 'tinymce/')
-DJANGO_WYSIWYG_FLAVOR = "tinymce4"
+DJANGO_WYSIWYG_FLAVOR = "tinymce"
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
