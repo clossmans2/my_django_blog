@@ -1,0 +1,8 @@
+<div class="alert alert-danger alert-dismissable fade in" role="alert">
+    <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+        <span>&times;</span>
+    </button>
+    {% for error in errors %}
+        <strong>{{ error }}</strong>{% if not forloop.last %}<br>{% endif %}
+    {% endfor %}
+</div>

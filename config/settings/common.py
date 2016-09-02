@@ -9,11 +9,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
-
-import environ
+import environ, os
 
 ROOT_DIR = environ.Path(__file__) - 3  # (my_django_blog/config/settings/common.py - 3 = my_django_blog/)
-APPS_DIR = ROOT_DIR.path('my_django_blog')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+APPS_DIR = os.path.join(BASE_DIR, 'my_django_blog')
+BLOG_DIR = os.path.join(BASE_DIR, 'blog')
+API_DIR = os.path.join(BASE_DIR, 'api')
 
 env = environ.Env()
 
@@ -39,19 +41,17 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
-    'tinymce',
-    'django_wysiwyg',
+    'rest_framework', #api
 )
-
-
-
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
     # custom users app
     'my_django_blog.users.apps.UsersConfig',
     # Your stuff: custom apps go here
-    'blog',
+    'blog.apps.BlogConfig',
+    'api.apps.ApiConfig',
+    'bootstrap4.apps.Bootstrap4Config'
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -84,7 +84,7 @@ DEBUG = env.bool('DJANGO_DEBUG', False)
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
-    str(APPS_DIR.path('fixtures')),
+    os.path.join(APPS_DIR, 'fixtures'),
 )
 
 # EMAIL CONFIGURATION
@@ -144,7 +144,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
-            str(APPS_DIR.path('templates')),
+            os.path.join(APPS_DIR, 'templates'),
+            os.path.join(BLOG_DIR, 'templates'),
         ],
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
@@ -178,17 +179,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(ROOT_DIR('staticfiles'))
+STATIC_ROOT = os.path.join(BASE_DIR + 'staticfiles')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
-DJANGO_WYSIWYG_MEDIA_URL = str(STATIC_URL + 'tinymce/')
-DJANGO_WYSIWYG_FLAVOR = "tinymce"
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
-    str(APPS_DIR.path('static')),
-    str(ROOT_DIR.path('node_modules')),
+    os.path.join(APPS_DIR,'static'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -200,7 +198,7 @@ STATICFILES_FINDERS = (
 # MEDIA CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR('media'))
+MEDIA_ROOT = os.path.join(APPS_DIR, 'media')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
@@ -248,13 +246,21 @@ else:
     CELERY_RESULT_BACKEND = BROKER_URL
 ########## END CELERY
 
-
-# django-compressor
-# ------------------------------------------------------------------------------
-
-
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
 
 
 # Your common stuff: Below this line define 3rd party library settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ]
+}
+
+# TINYMCE_PROFILE = {
+#     'theme': 'modern',
+#     'plugins': 'advlist autolink link lists hr searchreplace wordcount visualblocks visualchars code insertdatetime save table contextmenu paste textcolor',
+#     'toolbar': 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor | upload_button',
+#     'setup': 'addCustomButtons',
+#     'removed_menuitems': 'newdocument'
+# }

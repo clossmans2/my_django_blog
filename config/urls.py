@@ -7,11 +7,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from blog.views import post_list
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
-    url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
-
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, include(admin.site.urls)),
 
@@ -21,9 +19,8 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^blog/', include('blog.urls'), name='blog'),
-    url(r'^tinymce/', include('tinymce.urls')),
-
-
+    url(r'^api/', include('api.urls', namespace='api'), name='api'),
+    url(r'^$', post_list, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

@@ -1,12 +1,11 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from tinymce.models import HTMLField
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=200)
-    text = HTMLField()
+    text = models.TextField()
     created_date = models.DateTimeField(
         default=timezone.now)
     published_date = models.DateTimeField(
@@ -26,7 +25,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', related_name='comments')
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    text = HTMLField()
+    text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)
 
@@ -36,3 +35,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class HTMLField(models.TextField):
+    pass

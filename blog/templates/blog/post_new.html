@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap4 tinymce %}
+{% block contentbody %}
+    <form role="form" class="form-horizontal" method="post" name="post_form">
+        {% csrf_token %}
+        {% bootstrap_form form layout="horizontal" size="md" %}
+        {% buttons submit='Save' reset='Cancel' layout='horizontal' %}{% endbuttons %}
+    </form>
+{% endblock contentbody %}
+{% block extrajs %}
+    {% add_tinymce_to_selector selector='#id_text' %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("button[type='submit']").click(function(e){
+                e.preventDefault();
+                tinymce.triggerSave();
+                $('form').submit();
+            });
+        });
+    </script>
+{% endblock extrajs %}

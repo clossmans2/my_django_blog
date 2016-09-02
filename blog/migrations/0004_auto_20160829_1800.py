@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations
-import tinymce.models
+from blog import models
 
 
 class Migration(migrations.Migration):
@@ -16,11 +16,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='comment',
             name='text',
-            field=tinymce.models.HTMLField(),
+            field=models.HTMLField(),
         ),
         migrations.AlterField(
             model_name='post',
             name='text',
-            field=tinymce.models.HTMLField(),
+            field=models.HTMLField(),
         ),
     ]

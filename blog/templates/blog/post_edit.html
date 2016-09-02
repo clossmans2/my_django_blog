@@ -1,26 +1,12 @@
 {% extends 'blog/base.html' %}
-{% load wysiwyg staticfiles %}
-{% block extracss %}
-    {{ block.super }}
-    {% wysiwyg_setup %}
-{% endblock extracss %}
+{% load bootstrap4 tinymce %}
 {% block contentbody %}
-    <form method="POST" class="post-form">
+    <form role="form" class="form-horizontal"  method="post" name="new_post">
         {% csrf_token %}
-        {{ form.non_field_errors }}
-        <div class="form-group row">
-            <label for="id_title" class="col-sm-2 col-form-label">Title</label>
-            <div class="col-sm-10">
-                <input type="text" id="id_title" class="form-control">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="id_text" class="col-sm-2 col-form-label">Body</label>
-            <div class="col-sm-10">
-                <textarea class="form-control" id="id_text"></textarea>
-                {% wysiwyg_editor "id_text" editor_name="tinymce" %}
-            </div>
-        </div>
-        <button class="save btn btn-primary" type="submit">Save</button>
+        {% bootstrap_form form layout="horizontal" size="md" %}
+        {% buttons submit='Save' reset='Cancel' layout='horizontal' %}{% endbuttons %}
     </form>
 {% endblock contentbody %}
+{% block extrajs %}
+    {% add_tinymce_to_selector selector='#id_text' %}
+{% endblock extrajs %}

@@ -74,3 +74,6 @@ CELERY_ALWAYS_EAGER = True
 ########## END CELERY
 
 # Your local stuff: Below this line define 3rd party library settings
+STATICFILES_DIRS += (
+    str(ROOT_DIR.path('node_modules')),
+)

@@ -1,0 +1,37 @@
+{% with bootstrap_pagination_url=bootstrap_pagination_url|default:"?" %}
+    <nav aria-label="Page navigation">
+        <ul class="{{ pagination_css_classes }}">
+            <li class="page-item{% if current_page == 1 %} disabled{% endif %}">
+                <a class="page-link" href="{% if current_page == 1 %}#{% else %}{{ bootstrap_pagination_url }}{{ parameter_name }}=1{% endif %}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {% if pages_back %}
+            <li class="page-item">
+                <a class="page-link" href="{{ bootstrap_pagination_url }}{{ parameter_name }}={{ pages_back }}">&hellip;</a>
+            </li>
+            {% endif %}
+            {% for p in pages_shown %}
+            <li class="page-item{% if current_page == p %} active{% endif %}">
+                {% if current_page == p %}
+                    <span class="page-link">{{ p }} <span class="sr-only">(current)</span></span>
+                {% else %}
+                    <a class="page-link" href="{{ bootstrap_pagination_url }}{{ parameter_name }}={{ p }}">{{ p }}</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            {% if pages_forward %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ bootstrap_pagination_url }}{{ parameter_name }}={{ pages_forward }}">&hellip;</a>
+                </li>
+            {% endif %}
+            <li class="page-item last{% if current_page == num_pages %} disabled{% endif %}">
+                <a class="page-link" href="{% if current_page == num_pages %}#{% else %}{{ bootstrap_pagination_url }}{{ parameter_name }}={{ num_pages }}{% endif %}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endwith %}

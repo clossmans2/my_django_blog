@@ -14,9 +14,14 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(_('Name of User'), blank=True, max_length=255)
+    bio = models.TextField(_('Short Bio'), blank=True, null=True, default='')
 
     def __str__(self):
-        return self.username
+        return '%s %s' % (self.first_name, self.last_name)
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
+
+
+class HTMLField(models.TextField):
+    pass

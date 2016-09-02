@@ -7,6 +7,12 @@ wheel==0.29.0
 # Bleeding edge Django
 django==1.9.9
 
+# Rest Framework for API
+djangorestframework==3.4.6
+coreapi==1.32.3
+django-filter==0.14.0
+django-guardian==1.4.5
+
 # Configuration
 django-environ==0.4.0
 whitenoise==3.2.1
@@ -14,7 +20,6 @@ whitenoise==3.2.1
 # Forms
 django-braces==1.9.0
 django-crispy-forms==1.6.0
-django-floppyforms==1.7.0
 
 # Models
 django-model-utils==2.5.2
@@ -36,10 +41,8 @@ pytz==2016.6.1
 # Redis support
 django-redis==4.4.4
 redis>=2.10.0
-redislite==3.0.296
 
 Celery==3.1.23
 
-# MySql instead of Postgres on PythonAnywhere
-mysqlclient==1.3.7
+# Requirement of TinyMCE or something
 simplejson>=3.8.2
